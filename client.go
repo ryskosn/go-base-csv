@@ -53,7 +53,7 @@ func init() {
 
 	bytes, err := ioutil.ReadAll(credsf)
 	if err != nil {
-		log.Fatalf("failed to read credentials file: %v", err)
+		log.Fatalf("Failed to read credentials file: %v", err)
 	}
 	json.Unmarshal(bytes, &creds)
 }
@@ -197,7 +197,7 @@ func NewConfig() *oauth2.Config {
 	}
 	parsedURL, err := url.ParseRequestURI(callbackURL)
 	if err != nil {
-		fmt.Printf("failed to parse url: %s", callbackURL)
+		fmt.Printf("Failed to parse url: %s", callbackURL)
 		return nil
 	}
 	return &oauth2.Config{
@@ -233,7 +233,7 @@ func (c *Client) getOrders(limit int, offset int) Orders {
 	req.URL.RawQuery = values.Encode()
 	resp, err := c.Client.Do(req)
 	if err != nil {
-		log.Fatalf("get orders failed:%v\n", err)
+		log.Fatalf("Failed to get orders: %v\n", err)
 	}
 	orders := new(Orders)
 	if err := decodeBody(resp, orders); err != nil {
@@ -246,7 +246,7 @@ func (c *Client) getOrderDetail(key string) Order {
 	url := fmt.Sprintf("https://api.thebase.in/1/orders/detail/%v", key)
 	resp, err := c.Client.Get(url)
 	if err != nil {
-		log.Fatalf("get order detail failed:%v", err)
+		log.Fatalf("Failed to get order detail:%v", err)
 	}
 	o := new(Order)
 	if err := decodeBody(resp, o); err != nil {
@@ -286,7 +286,7 @@ func initToken() {
 	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		fmt.Println(unescapeResponse(err.Error()))
-		log.Fatalf("Token exchange failed: %v\n", err)
+		log.Fatalf("Failed to exchange token: %v\n", err)
 	}
 	if err := writeToken(token); err != nil {
 		log.Fatalf("writeToken: %v\n", err)
@@ -308,18 +308,19 @@ func main() {
 
 	f, err := statikFS.Open("/token.json")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to open token.json: %v\n", err)
 	}
+
 	bytes, err := ioutil.ReadAll(f)
 	if err != nil {
 		fmt.Println(err)
-		fmt.Println("token seems broken, initialize it.")
+		fmt.Println("Token seems broken, initialize it.")
 		initToken()
 	}
 
 	var token *oauth2.Token
 	if err = json.Unmarshal(bytes, &token); err != nil {
-		log.Fatalf("token Unmarshal failed: %v\n", err)
+		log.Fatalf("Failed to Unmarshal token: %v\n", err)
 	}
 
 	config := NewConfig()
