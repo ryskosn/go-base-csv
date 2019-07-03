@@ -1,6 +1,6 @@
 BINARY_NAME=basecsv
 BINARY_WINDOWS=${BINARY_NAME}.exe
-DEPLOY_PATH=/Users/ryosuke/Dropbox/kondosan@Share/osanai/base_csv_download
+DEPLOY_PATH=/Users/USERNAME/Dropbox/foo/bar/base_csv_download
 
 build:
 	go build -o ${BINARY_NAME} -v
