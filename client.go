@@ -90,39 +90,6 @@ func writeToken(token *oauth2.Token) error {
 	return err
 }
 
-// // readToken reads token from local file.
-// func readToken(filename string) *oauth2.Token {
-// 	f, err := os.Open(filename)
-// 	if err != nil {
-// 		log.Fatalf("open token file: %v", err)
-// 	}
-// 	defer f.Close()
-// 	var bytes []byte
-// 	bytes, err = ioutil.ReadAll(f)
-// 	if err != nil {
-// 		log.Fatalf("read token file: %v", err)
-// 	}
-// 	var token *oauth2.Token
-// 	if err = json.Unmarshal(bytes, &token); err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	return token
-// }
-
-// // readTokenBinData reads from binary data.
-// // using go-bindata.
-// func readTokenBinData() *oauth2.Token {
-// 	bytes, err := Asset("data/token.json")
-// 	if err != nil {
-// 		log.Fatalf("open token from bindata failed: %v", err)
-// 	}
-// 	var token *oauth2.Token
-// 	if err = json.Unmarshal(bytes, &token); err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	return token
-// }
-
 // exists checks file.
 func exists(filename string) bool {
 	_, err := os.Stat(filename)
